@@ -1,10 +1,9 @@
-function generateMarkdown(data) {
-    return `
+
     
-    # ${data.title}
+    # good readme
     
     ## Description 
-    ${data.description}
+    generate good readmes
     
     ## Table of Contents
     * [Installation](#-Installation)
@@ -17,36 +16,33 @@ function generateMarkdown(data) {
     * [Tests](#-Tests)
     
     ## Installation
-    ${data.install}
+    run node index.js
 
 
     ## Usage
-    ${data.usage}
+    generating good readmes
 
 
     ## License
-    ${data.license}
+    
 
 
     ## Authors
-    ${data.author}
+    austin
 
 
     ## Contributing
-    ${data.contribute}
+    email
 
 
     ## Tests
-    ${data.test}
+    yes
 
 
     ## Questions
-    ${data.questions}
+    email
 
 
-    email address: ${data.email}
-    github: [${data.githubUserName}](https://github.com/${data.githubUserName})
-    `;
-  };
-  
-  module.exports = generateMarkdown;
+    email address: austin@aw.com
+    github: [git austin](https://github.com/git austin)
+    

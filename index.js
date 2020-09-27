@@ -3,62 +3,76 @@ const inquirer = require("inquirer");
 const generateMarkdown = require("./dev/generateMarkdown");
 
 const questions = [
-  {
-    type: "input",
-    message: "What is your project title?",
-    name: "name",
-  },
-  {
-    type: "input",
-    message: "What is the description of your project?",
-    name: "description",
-  },
-  {
-    type: "input",
-    message: "Please enter your installation instructions:",
-    name: "installation",
-  },
-  {
-    type: "input",
-    message: "Enter any usage information",
-    name: "usage",
-  },
-  {
-    type: "input",
-    message: "What are your guidelines for contributing to this project?",
-    name: "contributing",
-  },
-  {
-    type: "input",
-    message: "Do you have test instructions?",
-    name: "testInstructions",
-  },
-  {
-    type: "list",
-    message: "What level of license?",
-    name: "licenseLevel",
-    choices: [
-      "GNU AGPLv3",
-      "GNU GPLv3",
-      "GNU LGPLv3",
-      "GNU FDL v1.3",
-      "Mozilla Public License 2.0",
-      "Apache License 2.0",
-      "MIT License",
-      "Boost Software License 1.0",
-      "Unlicense",
-    ],
-  },
-  {
-    type: "input",
-    message: "What is your github username?",
-    name: "githubAddress",
-  },
-  {
-    type: "input",
-    message: "What is your email address?",
-    name: "emailAddress",
-  },
+    {
+        type: "input",
+        message: "What is the title of your project?",
+        name: "title"
+    },
+    {
+        type: "input",
+        message: "Enter a description.",
+        name: "description"
+    },
+    {
+        type: "input",
+        message: "What are the installation guidelines?",
+        name: "install"
+    },
+    {
+        type: "input",
+        message: "What is your application used for?",
+        name: "usage"
+    },
+    {
+        type: "checkbox",
+        message: "Select a license",
+        name: "license",
+        choices: [
+            'Apache License 2.0', 
+            'GNU General Public License v3.0', 
+            'MIT license', 
+            'BSD 2-Clause "Simplified" License', 
+            'Boost Software License 1.0', 
+            'Creative Commons Zero v1.0 Universal', 
+            'Eclipse Public License 2.0', 
+            'GNU Affero General Public License v3.0', 
+            'GNU General Public License v2.0', 
+            'GNU Lesser General Public License v2.1', 
+            'Mozzila Public License 2.0',
+            'The Unilicense',
+        ]
+    },
+    {
+        type: "input",
+        message: "Who is(are) the author(s)?",
+        name: "author"
+    },
+    {
+        type: "input",
+        message: "What are the rules for contributing?",
+        name: "contribute"
+    },
+    {
+        type: "input",
+        message: "Tests",
+        name: "test"
+    },
+    {
+        type: "input",
+        message: "enter github user name",
+        name: "githubUserName"
+    },
+    {
+        type: "input",
+        message: "enter contact e-mail address.",
+        name: "email"
+    },
+    {
+        type: "input",
+        message: "Enter instructions on how to reach you for any questions",
+        name: "questions"
+    }
+
 ];
 
 function licenseBadge(data) {
@@ -111,21 +125,28 @@ function writeToFile(fileName, data) {
 
 // function to initialize program
 function init() {
-  inquirer
-    .prompt(questions)
-    .then(function (data) {
-    //   console.log("Here's the MD so far ... \n", data);
+    
+    try{
+        inquirer.prompt(questions).then(data => {
+            const filename = './assets/README.md'
+            fs.writeFile(filename, generateMarkdown(data), err => {
+                if (err) {
+                    console.log('ERROR: Could not write README'); 
+                } else {
+                    console.log('Success! You now have an very well written README')
+                }
+            });
 
-      const licensedJSON = licenseBadge(data);
+        });
 
-    //   console.log(" MD after ... \n", licensedJSON);
-      writeToFile("assets/README.md", generateMarkdown(licensedJSON));
-    })
+    }
+    catch(error){
+        console.log(error);
+    }
+    finally{
+        return `You've created a well written README! Thank you for using the Good_README_Generator.`
+    }
+};
 
-    .catch((error) => {
-      console.error("ERROR CAUGHT");
-    });
-}
-
-// function call to initialize program
 init();
+// function call to initialize program
